@@ -67,7 +67,7 @@ class _Resgistralo extends StatelessWidget {
                     icono: Icons.man_outlined),
                 onChanged: (value) => registerform.Nombre = value,
                 validator: (value) {
-                  if (value != null && value.length > 0) {
+                  if (value != null && value.isNotEmpty) {
                     return null;
                   } else {
                     return 'Debe llenar el campo nombre';
@@ -152,7 +152,7 @@ class _Resgistralo extends StatelessWidget {
                     icono: Icons.supervised_user_circle),
                 onChanged: (value) => registerform.UserName = value,
                 validator: (value) {
-                  if (value != null) {
+                  if (value != null && value.isNotEmpty) {
                     return null;
                   } else {
                     return 'El minimo de caracteres es 6';
