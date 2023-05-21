@@ -90,7 +90,7 @@ class _Resgistralo extends StatelessWidget {
                 onChanged: (value) => registerform.Apellido = value,
 
                 validator: (value) {
-                  if (value != null) {
+                  if (value != null && value.isNotEmpty) {
                     return null;
                   } else {
                     return 'El minimo de caracteres es 6';
@@ -179,7 +179,7 @@ class _Resgistralo extends StatelessWidget {
                     : () async {
                         //descativa el boton y cajas cuando se presiona ingresar
                         FocusScope.of(context).unfocus();
-                        //final authservice = Provider.of<AuthService>(context);
+                        final authservice = Provider.of<AuthService>(context);
                         if (!registerform.isvalidform()) return;
                         registerform.isLoading = true;
                         await Future.delayed(Duration(seconds: 2));
