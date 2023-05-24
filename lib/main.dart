@@ -15,6 +15,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AuthService(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => SeriesService(),
+        ),
       ],
       child: MaterialApp(
           title: 'Material App',

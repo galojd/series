@@ -4,6 +4,7 @@ import 'package:series/widgets/widgets.dart';
 
 import '../UI/Input_decorations.dart';
 import '../providers/Login_form_provider.dart';
+import '../services/services.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -131,13 +132,46 @@ class _LoginForm extends StatelessWidget {
                   onPressed: loginform.isLoading
                       ? null
                       : () async {
+                          final authservice =
+                              Provider.of<AuthService>(context, listen: false);
                           //descativa el boton y cajas cuando se presiona ingresar
                           FocusScope.of(context).unfocus();
                           if (!loginform.isvalidform()) return;
                           loginform.isLoading = true;
+                          final String? errormessage = await authservice.login(
+                              loginform.email, loginform.Password);
+                          if (errormessage == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text('Bienvenido',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20))),
+                            );
+                            Navigator.pushReplacementNamed(context, 'home2');
+                          } else {
+                            if (errormessage == 'No se encontro el Email') {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text('Correo no registrado',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20))),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text('Contraseña incorrecta',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20))),
+                              );
+                              print(errormessage);
+                            }
+
+                            loginform.isLoading = false;
+                          }
+                          //Navigator.pushReplacementNamed(context, 'home2');
                           await Future.delayed(Duration(seconds: 2));
-                          loginform.isLoading = false;
-                          Navigator.pushReplacementNamed(context, 'home2');
                         })
             ],
           )),

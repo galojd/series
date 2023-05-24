@@ -179,14 +179,56 @@ class _Resgistralo extends StatelessWidget {
                     : () async {
                         //descativa el boton y cajas cuando se presiona ingresar
                         FocusScope.of(context).unfocus();
-                        //final authservice = Provider.of<AuthService>(context);
+                        final authservice =
+                            Provider.of<AuthService>(context, listen: false);
                         if (!registerform.isvalidform()) return;
                         registerform.isLoading = true;
                         await Future.delayed(Duration(seconds: 2));
-                        //final String? token = await authservice.createuser(, apellido, email, password, username)
+                        final String? mensaje = await authservice.createuser(
+                            registerform.Nombre,
+                            registerform.Apellido,
+                            registerform.email,
+                            registerform.Password,
+                            registerform.UserName);
+
+                        /*switch (mensaje) {
+                          case null:
+                            Navigator.pushReplacementNamed(context, 'home2');
+                            break;
+                          case 'No se pudo agregar el nuevo usuario':
+                            print(
+                                'la contraseña debe conetener mayusculas, numeros y signos');
+                            break;
+                          case 'El Email ya esta en uso':
+                            print(mensaje);
+                            break;
+                          case 'El usuario ya se registro anteriormente':
+                            print(mensaje);
+                            break;
+                        }*/
+
+                        if (mensaje == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content:
+                                  Text('Se registro su cuenta exitosamente')));
+                          Navigator.pushReplacementNamed(context, 'home2');
+                        }
+                        if (mensaje == 'No se pudo agregar el nuevo usuario') {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'la contraseña debe conetener mayusculas, numeros y signos')));
+                        }
+                        if (mensaje == 'El Email ya esta en uso') {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(mensaje!)));
+                        }
+                        if (mensaje ==
+                            'El usuario ya se registro anteriormente') {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(mensaje!)));
+                        }
 
                         registerform.isLoading = false;
-                        Navigator.pushReplacementNamed(context, 'home2');
                       },
               )
             ],

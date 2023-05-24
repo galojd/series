@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../services/services.dart';
 import '../widgets/widgets.dart';
 
 class Home_Screen extends StatelessWidget {
@@ -6,6 +8,7 @@ class Home_Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authservice = Provider.of<SeriesService>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           title: const Text("Series"),
