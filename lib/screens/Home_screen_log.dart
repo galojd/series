@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../services/services.dart';
 import '../widgets/widgets.dart';
 
 class Home_Screen_Log extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final servicioserie = Provider.of<SeriesService>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           title: const Text("Series"),
@@ -46,8 +49,8 @@ class Home_Screen_Log extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              card_swipper(),
-              Text("Monster hunter world"),
+              card_swipper(lista: servicioserie.listaRecords),
+              //Text("Monster hunter world"),
               SizedBox(
                 height: 40,
               ),

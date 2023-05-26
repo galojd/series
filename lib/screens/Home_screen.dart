@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../models/models.dart';
 import '../services/services.dart';
 import '../widgets/widgets.dart';
 
@@ -8,7 +9,8 @@ class Home_Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authservice = Provider.of<SeriesService>(context, listen: false);
+    final servicioserie = Provider.of<SeriesService>(context);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Series"),
@@ -28,8 +30,8 @@ class Home_Screen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              card_swipper(),
-              Text("Monster hunter world"),
+              card_swipper(lista: servicioserie.listaRecords),
+              //Text("Monster hunter world"),
               SizedBox(
                 height: 40,
               ),
