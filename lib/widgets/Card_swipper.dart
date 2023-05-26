@@ -28,14 +28,32 @@ class card_swipper extends StatelessWidget {
         return GestureDetector(
           onTap: () =>
               Navigator.pushNamed(context, 'details', arguments: 'serie'),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: AssetImage('assets/no-image.jpg'),
-              image: NetworkImage(serie.imagen),
-              fit: BoxFit.cover,
+          child: Stack(children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                placeholder: AssetImage('assets/no-image.jpg'),
+                image: NetworkImage(serie.imagen),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Container(
+                padding: EdgeInsets.all(8),
+                color: Colors.black.withOpacity(0.5),
+                child: Text(
+                  serie.nombre,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ]),
         );
       },
     );
