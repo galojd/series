@@ -38,13 +38,13 @@ class ListaRecord {
   String serieId;
   String nombre;
   String descripcion;
-  String imagen;
+  String? imagen;
 
   ListaRecord({
     required this.serieId,
     required this.nombre,
     required this.descripcion,
-    required this.imagen,
+    this.imagen,
   });
 
   factory ListaRecord.fromJson(String str) =>

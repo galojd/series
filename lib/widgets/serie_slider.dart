@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../models/models.dart';
+
 class Serie_Slider extends StatelessWidget {
-  const Serie_Slider({super.key});
+  final List<CapituloRecord> listacapitulo;
+  const Serie_Slider({super.key, required this.listacapitulo});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class Serie_Slider extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Center(
-              child: Text("capitulos",
+              child: Text("Capitulos",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ),
           ),
@@ -23,8 +26,9 @@ class Serie_Slider extends StatelessWidget {
           Expanded(
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 20,
-                  itemBuilder: ((context, index) => const _Capitulo_poster())))
+                  itemCount: listacapitulo.length,
+                  itemBuilder: ((context, index) =>
+                      _Capitulo_poster(capitulo: listacapitulo[index]))))
         ],
       ),
     );
@@ -32,12 +36,13 @@ class Serie_Slider extends StatelessWidget {
 }
 
 class _Capitulo_poster extends StatelessWidget {
-  const _Capitulo_poster({
-    Key? key,
-  }) : super(key: key);
+  final CapituloRecord capitulo;
+  _Capitulo_poster({Key? key, required this.capitulo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String nomcap = capitulo.nombre;
+    String numcap = capitulo.numeroCapitulo.toString();
     return Container(
       width: 150,
       height: 300,
@@ -50,17 +55,16 @@ class _Capitulo_poster extends StatelessWidget {
                 arguments: 'capitulo de serie'),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: const FadeInImage(
+              child: FadeInImage(
                   placeholder: AssetImage('assets/no-image.jpg'),
-                  image: NetworkImage(
-                      'https://res.cloudinary.com/dlwu0vkrp/image/upload/v1672766668/lx973auyzvgpishbzym4.jpg'),
+                  image: NetworkImage(capitulo.imagenurl!),
                   width: 150,
                   height: 220,
                   fit: BoxFit.cover),
             ),
           ),
-          const Text(
-            'batman el caballero de la noche : cap 1',
+          Text(
+            '$nomcap :' 'capitulo $numcap',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

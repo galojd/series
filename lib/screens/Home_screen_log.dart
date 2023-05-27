@@ -54,7 +54,7 @@ class Home_Screen_Log extends StatelessWidget {
               SizedBox(
                 height: 40,
               ),
-              Serie_Slider()
+              Serie_Slider(listacapitulo: servicioserie.listacapitulo)
             ],
           ),
         ));

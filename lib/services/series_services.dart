@@ -10,10 +10,13 @@ class SeriesService extends ChangeNotifier {
   final List<Series> serie = [];
   final List<MostrarSeries> muestraserie = [];
   final List<ListaRecord> listaRecords = [];
+  final List<MostrarCapitulo> muestracapitulo = [];
+  final List<CapituloRecord> listacapitulo = [];
   bool isLoading = true;
 
   SeriesService() {
     this.MuestraSeries();
+    this.MuestraCapitulos();
   }
 
   Future loadSeries() async {
@@ -43,7 +46,7 @@ class SeriesService extends ChangeNotifier {
     //print(seriesMap[1]);
   }
 
-  MuestraSeries() async {
+  Future MuestraSeries() async {
     this.isLoading = true;
     notifyListeners();
     final url = Uri.parse('$_url' 'Series/report');
@@ -71,6 +74,39 @@ class SeriesService extends ChangeNotifier {
       print(record.nombre);
     }*/
     //print(muestraserie.listaRecords[1].nombre);
+    this.isLoading = false;
+    notifyListeners();
+  }
+
+  Future MuestraCapitulos() async {
+    this.isLoading = true;
+    notifyListeners();
+
+    final url = Uri.parse('$_url' 'Capitulo/report');
+    final Map<String, dynamic> data = {
+      // Agrega aquí los datos que deseas enviar en la solicitud
+      'NumeroPagina': 1,
+      'CantidadElementos': 10,
+    };
+    final resp = await http.post(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(data),
+    );
+    final Map<String, dynamic> capitulosmostrarMap = jsonDecode(resp.body);
+    print(capitulosmostrarMap);
+    final muestracapitulo = MostrarCapitulo.fromMap(capitulosmostrarMap);
+
+    listacapitulo.clear();
+    listacapitulo.addAll(muestracapitulo.capituloRecords);
+
+    /*for (var record in listacapitulo) {
+      print(record.nombreCapitulo);
+    }*/
+
     this.isLoading = false;
     notifyListeners();
   }
