@@ -5,8 +5,8 @@ import 'models.dart';
 class Series {
   String serieId;
   String nombre;
-  String descripcion;
-  String imagen;
+  String? descripcion;
+  String? imagen;
   List<dynamic>? capitulo;
   List<dynamic>? textoComentario;
   List<dynamic>? generoserie1;
@@ -14,8 +14,8 @@ class Series {
   Series({
     required this.serieId,
     required this.nombre,
-    required this.descripcion,
-    required this.imagen,
+    this.descripcion,
+    this.imagen,
     this.capitulo,
     this.textoComentario,
     this.generoserie1,

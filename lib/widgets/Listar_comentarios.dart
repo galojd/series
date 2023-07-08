@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class Lista_Comentarios extends StatelessWidget {
-  const Lista_Comentarios({super.key});
+  final List<dynamic> listadocomentario;
+  const Lista_Comentarios({super.key, required this.listadocomentario});
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +18,27 @@ class Lista_Comentarios extends StatelessWidget {
           Expanded(
               child: ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: 20,
-                  itemBuilder: ((context, index) => Listando())))
+                  itemCount: listadocomentario.length,
+                  itemBuilder: ((context, index) => _Listando(
+                        listadocomentario1: listadocomentario[index],
+                      ))))
         ],
       ),
     );
   }
 }
 
-class Listando extends StatelessWidget {
-  const Listando({
+class _Listando extends StatelessWidget {
+  final dynamic listadocomentario1;
+  const _Listando({
     Key? key,
+    required this.listadocomentario1,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final String textodecomentario = listadocomentario1['comentarioTexto'];
+    final String usuariocomentario = listadocomentario1['userName'];
     return Container(
       width: double.infinity,
       child: Column(
@@ -43,12 +48,12 @@ class Listando extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('usuario1'),
+              Text(usuariocomentario),
               Container(
-                width: 320,
+                width: 310,
                 height: 50,
                 child: Text(
-                  'Juegaso lo pase y aun asi siempre me da ganas de una caceria, lo recominedo si es que no lo has jugado',
+                  textodecomentario,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,

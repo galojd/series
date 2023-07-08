@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:series/screens/capitulos_screen.dart';
+import 'package:series/screens/screens.dart';
 
 import '../models/models.dart';
-import '../services/services.dart';
+import '../services/series_services.dart';
 
-class Serie_Slider extends StatelessWidget {
+class Serie_Slider_sin extends StatelessWidget {
   final List<Capitulo> listacapitulo;
-  const Serie_Slider({super.key, required this.listacapitulo});
+  const Serie_Slider_sin({super.key, required this.listacapitulo});
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +48,7 @@ class _Capitulo_poster extends StatelessWidget {
     final servicioserie = Provider.of<SeriesService>(context);
     String nomcap = capitulo.nombreCapitulo!;
     String numcap = capitulo.numeroCapitulo.toString();
+
     return Container(
       width: 150,
       height: 300,
@@ -57,11 +58,12 @@ class _Capitulo_poster extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () async {
+              //await servicioserie.Muestracapituloserieactual(capitulo.serieId);
               await servicioserie.Mostrardatosdeserie(capitulo.serieId);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Capitulo_screen(capitulo: capitulo),
+                  builder: (context) => Capitulo_screen_sin(capitulo: capitulo),
                 ),
               );
             },

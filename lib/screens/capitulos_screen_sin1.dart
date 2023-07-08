@@ -1,36 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:series/models/models.dart';
-import 'package:series/screens/screens.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flick_video_player/flick_video_player.dart';
-import '../services/series_services.dart';
+import '../services/services.dart';
 import '../widgets/widgets.dart';
+import 'screens.dart';
 
-//este es el capituloscreen para opciones logeadas
-class Capitulo_screen extends StatefulWidget {
+class Capitulo_screen_sin1 extends StatefulWidget {
   final Capitulo capitulo;
 
-  const Capitulo_screen({super.key, required this.capitulo});
+  const Capitulo_screen_sin1({super.key, required this.capitulo});
   @override
-  State<Capitulo_screen> createState() => _Capitulo_screenState(capitulo);
+  State<Capitulo_screen_sin1> createState() => _Capitulo_screenState(capitulo);
 }
 
-class _Capitulo_screenState extends State<Capitulo_screen> {
+class _Capitulo_screenState extends State<Capitulo_screen_sin1> {
   final Capitulo capitulo1;
-  List<dynamic> comentarios = [];
-
-  @override
-  void initState() {
-    super.initState();
-    comentarios = widget.capitulo.textoComentario ?? [];
-  }
-
-  void agregarComentario(dynamic comentario) {
-    setState(() {
-      comentarios.add(comentario);
-    });
-  }
 
   _Capitulo_screenState(this.capitulo1);
   @override
@@ -39,7 +25,10 @@ class _Capitulo_screenState extends State<Capitulo_screen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(capitulomenu: capitulo1, serie: servicioserie.serie1),
+          _CustomAppBar(
+            capitulomenu: capitulo1,
+            serie: servicioserie.serie1,
+          ),
           SliverList(
               delegate: SliverChildListDelegate([
             SizedBox(
@@ -60,13 +49,10 @@ class _Capitulo_screenState extends State<Capitulo_screen> {
             ),
             Text('Comentarios',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            //ComentarioInput(capitulo1: capitulo1, serie: null,),
+            navegacion_logeo(),
             SizedBox(
               height: 10,
             ),
-            //Aqui se mandan los comentarios de los capitulos
-            ComentarioInputComentario(
-                onComentarioAgregado: agregarComentario, lista: capitulo1),
             Lista_Comentarios(
               listadocomentario: capitulo1.textoComentario!,
             )
@@ -89,20 +75,19 @@ class _Sub_Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final servicioserie = Provider.of<SeriesService>(context);
-    final int numerocap = capitulo.numeroCapitulo;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        if (numerocap > 1)
+        if (capitulo.numeroCapitulo > 1)
           GestureDetector(
             onTap: () async {
-              int nuevocap1 = numerocap - 1;
-              await servicioserie.Mostrardatosdeserie(capitulo.serieId);
+              int nuevocap1 = capitulo.numeroCapitulo - 1;
               await servicioserie.Mostrarcapitulo1(capitulo.serieId, nuevocap1);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Capitulo_screen_1(
+                  builder: (context) => Capitulo_screen_sin(
                       capitulo: servicioserie.capitulo2.first),
                 ),
               );
@@ -125,9 +110,7 @@ class _Sub_Menu extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Details_Screen_Sin(
-                  lista: serie.first,
-                ),
+                builder: (context) => Details_Screen_Sin(lista: serie.first),
               ),
             );
           },
@@ -144,16 +127,15 @@ class _Sub_Menu extends StatelessWidget {
             ],
           ),
         ),
-        if (serie.first.capitulo!.length > numerocap)
+        if (serie.first.capitulo!.length > capitulo.numeroCapitulo)
           GestureDetector(
             onTap: () async {
-              int nuevocap1 = numerocap + 1;
-              await servicioserie.Mostrardatosdeserie(capitulo.serieId);
-              await servicioserie.Mostrarcapitulo1(capitulo.serieId, nuevocap1);
+              int nuevocap = capitulo.numeroCapitulo + 1;
+              await servicioserie.Mostrarcapitulo1(capitulo.serieId, nuevocap);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Capitulo_screen_1(
+                  builder: (context) => Capitulo_screen_sin(
                       capitulo: servicioserie.capitulo2.first),
                 ),
               );
@@ -225,8 +207,8 @@ class __ReproductorState extends State<_Reproductor> {
   void initState() {
     super.initState();
     flickManager = FlickManager(
-      videoPlayerController:
-          VideoPlayerController.network(capitulo.capituloUrl!),
+      videoPlayerController: VideoPlayerController.network(
+          'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
     );
   }
 

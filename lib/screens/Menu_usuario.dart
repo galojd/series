@@ -1,33 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
+import '../models/models.dart';
+import '../services/services.dart';
+import '../screens/screens.dart';
 
+//Aqui estan listados los favoritos que indico al dar siguiendo a alguna serie
 class Menu_Usuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final servicioserie = Provider.of<SeriesService>(context, listen: false);
+    final FlutterSecureStorage storage = FlutterSecureStorage();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favoritos'),
         elevation: 0,
       ),
       body: ListView.builder(
-        itemCount: 10,
+        itemCount: servicioserie.usuariodeserie.length,
         itemBuilder: (context, index) {
+          String nombre = servicioserie.usuariodeserie[index].nombre;
+          String imagen = servicioserie.usuariodeserie[index].imagen!;
+          String idserie = servicioserie.usuariodeserie[index].serieId;
           return Column(
             children: [
               GestureDetector(
-                onTap: () =>
-                    Navigator.pushNamed(context, 'details', arguments: 'serie'),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: const FadeInImage(
-                    placeholder: AssetImage('assets/no-image.jpg'),
-                    image: NetworkImage(
-                        'https://as01.epimg.net/meristation/imagenes/2020/10/07/noticias/1602057129_447711_1602057207_noticia_normal.jpg'),
-                    fit: BoxFit.cover,
+                onTap: () async {
+                  String usuarioId = await storage.read(key: 'userid') ??
+                      'no hay no exite'; // Obtén el ID de usuario correspondiente
+                  await servicioserie.ListandoUsuarioSerie(usuarioId);
+                  await servicioserie.Mostrardatosdeserie(idserie);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Details_Screen(
+                            lista: servicioserie.serie1.first);
+                      },
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  width: 300, // Ancho deseado del Container
+                  height: 300, // Altura deseada del Container
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: FadeInImage.assetNetwork(
+                      placeholder: 'assets/no-image.jpg',
+                      image: imagen,
+                      fit: BoxFit.cover,
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/no-image.jpg',
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
-              const Text(
-                'nombreserie',
+              Text(
+                nombre,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 25),

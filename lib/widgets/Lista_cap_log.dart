@@ -3,11 +3,11 @@ import 'package:series/models/models.dart';
 
 import '../screens/screens.dart';
 
-class lista_Cap extends StatelessWidget {
+class lista_Cap_Log extends StatelessWidget {
   final List<dynamic> listadocapitulo;
   final Series serie;
 
-  const lista_Cap(
+  const lista_Cap_Log(
       {super.key, required this.listadocapitulo, required this.serie});
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _ListaCapitulos extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Capitulo_screen_Serie(
+                  builder: (context) => Capitulo_screen_Serie_Log(
                     capitulo: listadocapitulo1,
                     listaserie: serie,
                   ),

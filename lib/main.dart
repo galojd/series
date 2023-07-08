@@ -22,17 +22,19 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           title: 'Material App',
           debugShowCheckedModeBanner: false,
-          initialRoute: 'home',
+          initialRoute: 'loading',
           routes: {
             'home': (_) => const Home_Screen(),
-            'details': (__) => const Details_Screen(),
-            'capitulo': (___) => Capitulo_screen(),
+            //'details': (__) => const Details_Screen(),
+            //'capitulo': (___) => Capitulo_screen(),
             'capit': (context) => SamplePlayer_screen(),
             'login': (____) => const Login(),
             'registrar': (_______) => const Registrar(),
             'home2': (________) => Home_Screen_Log(),
             'menu_usuario': (_____) => Menu_Usuario(),
-            'Actualiza': (context_) => const Actualizar()
+            'Actualiza': (context_) => const Actualizar(),
+            'cheching': (cont_) => const CheckAuthScreen(),
+            'loading': (con_) => LoadingScreen()
           },
           theme: ThemeData.dark()),
     );

@@ -147,7 +147,8 @@ class _LoginForm extends StatelessWidget {
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 20))),
                             );
-                            Navigator.pushReplacementNamed(context, 'home2');
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, 'home2', (route) => false);
                           } else {
                             if (errormessage == 'No se encontro el Email') {
                               ScaffoldMessenger.of(context).showSnackBar(

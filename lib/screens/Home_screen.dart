@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/models.dart';
+import '../Search/Search_delegate.dart';
 import '../services/services.dart';
 import '../widgets/widgets.dart';
 
@@ -17,7 +17,10 @@ class Home_Screen extends StatelessWidget {
           elevation: 0,
           actions: [
             IconButton(
-                onPressed: () {}, icon: const Icon(Icons.search_outlined)),
+                //aqui conectare el boton de busqueda con un Search_delegate
+                onPressed: () => showSearch(
+                    context: context, delegate: SerieSearchDelegate()),
+                icon: const Icon(Icons.search_outlined)),
             IconButton(
                 onPressed: () => Navigator.pushNamed(context, 'login',
                     arguments: 'loguearme'),
@@ -30,12 +33,12 @@ class Home_Screen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              card_swipper(lista: servicioserie.listaRecords),
+              card_swipper_sin(lista: servicioserie.serie),
               //Text("Monster hunter world"),
               SizedBox(
                 height: 40,
               ),
-              Serie_Slider(listacapitulo: servicioserie.listacapitulo)
+              Serie_Slider_sin(listacapitulo: servicioserie.capitulo)
             ],
           ),
         ));

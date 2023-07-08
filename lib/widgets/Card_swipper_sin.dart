@@ -1,20 +1,15 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:series/models/models.dart';
-import '../screens/screens.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:provider/provider.dart';
-import '../services/series_services.dart';
+import 'package:series/screens/screens.dart';
 
-class card_swipper extends StatelessWidget {
+class card_swipper_sin extends StatelessWidget {
   final List<Series> lista;
 
-  const card_swipper({super.key, required this.lista});
+  const card_swipper_sin({super.key, required this.lista});
 
   @override
   Widget build(BuildContext context) {
-    final FlutterSecureStorage storage = FlutterSecureStorage();
-    final servicioserie = Provider.of<SeriesService>(context, listen: false);
     final size = MediaQuery.of(context)
         .size; //esto es para obtener el tamaño de la pantalla
     //print(lista.length);
@@ -31,16 +26,11 @@ class card_swipper extends StatelessWidget {
         //print(serie.imagen);
 
         return GestureDetector(
-          onTap: () async {
-            String usuarioId = await storage.read(key: 'userid') ??
-                'no hay no exite'; // Obtén el ID de usuario correspondiente
-            await servicioserie.ListandoUsuarioSerie(usuarioId);
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) {
-                  return Details_Screen(lista: lista[index]);
-                },
+                builder: (context) => Details_Screen_Sin(lista: lista[index]),
               ),
             );
           },

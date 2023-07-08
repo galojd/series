@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:series/models/models.dart';
-import 'package:series/screens/screens.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import '../services/series_services.dart';
 import '../widgets/widgets.dart';
+import 'screens.dart';
 
-//este es el capituloscreen para opciones logeadas
-class Capitulo_screen extends StatefulWidget {
+//este es el capituloscreen para opciones logeadas segunda version es decir la temporal para cuando navego entre capitulos
+class Capitulo_screen_1 extends StatefulWidget {
   final Capitulo capitulo;
 
-  const Capitulo_screen({super.key, required this.capitulo});
+  const Capitulo_screen_1({super.key, required this.capitulo});
   @override
-  State<Capitulo_screen> createState() => _Capitulo_screenState(capitulo);
+  State<Capitulo_screen_1> createState() => _Capitulo_screenState(capitulo);
 }
 
-class _Capitulo_screenState extends State<Capitulo_screen> {
+class _Capitulo_screenState extends State<Capitulo_screen_1> {
   final Capitulo capitulo1;
   List<dynamic> comentarios = [];
 
@@ -93,6 +93,7 @@ class _Sub_Menu extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
+        //opcion anterior en el temporal de navegacion entre capitulos logeados
         if (numerocap > 1)
           GestureDetector(
             onTap: () async {
@@ -102,8 +103,8 @@ class _Sub_Menu extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Capitulo_screen_1(
-                      capitulo: servicioserie.capitulo2.first),
+                  builder: (context) =>
+                      Capitulo_screen(capitulo: servicioserie.capitulo2.first),
                 ),
               );
             },
@@ -120,6 +121,7 @@ class _Sub_Menu extends StatelessWidget {
               ],
             ),
           ),
+        //opcion menu en el temporal de navegacion entre capitulos logeados
         GestureDetector(
           onTap: () {
             Navigator.push(
@@ -144,6 +146,7 @@ class _Sub_Menu extends StatelessWidget {
             ],
           ),
         ),
+        //opcion siguiente en el temporal de navegacion entre capitulos logeados
         if (serie.first.capitulo!.length > numerocap)
           GestureDetector(
             onTap: () async {
@@ -153,8 +156,8 @@ class _Sub_Menu extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Capitulo_screen_1(
-                      capitulo: servicioserie.capitulo2.first),
+                  builder: (context) =>
+                      Capitulo_screen(capitulo: servicioserie.capitulo2.first),
                 ),
               );
             },
@@ -219,6 +222,7 @@ class _Reproductor extends StatefulWidget {
 class __ReproductorState extends State<_Reproductor> {
   FlickManager? flickManager;
   final Capitulo capitulo;
+  //'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'
 
   __ReproductorState(this.capitulo);
   @override
